@@ -6,6 +6,12 @@ from django.utils.translation import gettext_lazy as _
 
 from .managers import CustomUserManager
 
+USER_CHOICES = (
+    ("T", "Teacher"),
+    ("A", "Administration"),
+    ("S", "Student"),
+)
+
 
 class User(AbstractUser):
     """Default user for Backend API."""
@@ -16,6 +22,7 @@ class User(AbstractUser):
     name = CharField(_("Name of User"), blank=True, max_length=255)
 
     email = EmailField(_("email address"), unique=True)
+    role = CharField(max_length=1, choices=USER_CHOICES, default="S")
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -24,3 +31,14 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+# class Teacher(models.Model):
+#      user = models.OneToOneField(
+#         User, on_delete=models.CASCADE, related_name="teacher_account"
+#     )
+
+# class Student(models.Model):
+#      user = models.OneToOneField(
+#         User, on_delete=models.CASCADE, related_name="student_account"
+#     )

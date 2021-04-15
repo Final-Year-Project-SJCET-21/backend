@@ -10,6 +10,8 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework.authtoken.views import obtain_auth_token
 
+from backend_api.users.api.views import TeacherRegisterView
+
 schema_view = get_schema_view(
     openapi.Info(
         title="BAckend API",
@@ -37,11 +39,13 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
+    path("rest-auth/", include("rest_auth.urls")),
     path("rest-auth/registration/", include("rest_auth.registration.urls")),
+    path("rest-auth/registration/teacher", TeacherRegisterView.as_view()),
     path("account/", include("allauth.urls")),
     # path("accounts-rest/registration/account-confirm-email/(?P<key>.+)/",
     # confirm_email, name='account_confirm_email'),
-    # path("users/", include("backend_api.users.urls", namespace="users")),
+    path("users/", include("backend_api.users.urls", namespace="users")),
     # path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -52,7 +56,7 @@ if settings.DEBUG:
 # API URLS
 urlpatterns += [
     # API base url
-    path("api/", include("config.api_router")),
+    # path("api/", include("config.api_router")),
     # DRF auth token
     path("auth-token/", obtain_auth_token),
 ]
