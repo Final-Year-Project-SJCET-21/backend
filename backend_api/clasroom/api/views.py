@@ -29,6 +29,10 @@ class ClassRoomViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
 
+    def perform_create(self, serializer):
+        request = serializer.context["request"]
+        serializer.save(created_by=request.user)
+
     # def destroy(self, request, pk=None):
 
     #     """

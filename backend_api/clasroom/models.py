@@ -7,7 +7,9 @@ User = get_user_model()
 
 class ClassRoom(models.Model):
     room_name = models.CharField(max_length=200)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(
+        User, related_name="created_by", on_delete=models.CASCADE
+    )
     # unique_id = models.UUIDField(blank=False,unique=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
