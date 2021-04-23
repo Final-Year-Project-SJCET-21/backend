@@ -56,6 +56,7 @@ ASGI_APPLICATION = "config.asgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
+    "channels",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -297,7 +298,7 @@ REST_FRAMEWORK = {
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
-CORS_URLS_REGEX = r"^/rest-auth/.*$"
+CORS_URLS_REGEX = r"^.*$"
 # Your stuff...
 # ------------------------------------------------------------------------------
 CORS_ORIGIN_ALLW_ALL = True
