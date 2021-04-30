@@ -45,7 +45,7 @@ jobs:
             whoami
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
+          pass: ${{ secrets.KEY }}
 
   # With no caching at all the entire ci process takes 4m 30s to complete!
   # pytest:
