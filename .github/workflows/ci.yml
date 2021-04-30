@@ -42,7 +42,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            ls -a
+            supervisorctl restart project_api
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USERNAME }}
           pass: ${{ secrets.KEY }}
