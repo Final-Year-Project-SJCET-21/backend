@@ -39,13 +39,13 @@ jobs:
     steps:
 
       - name: "Deploying to Server"
-        uses: appleboy/ssh-action@master
+        uses: fifsky/ssh-action@master
         with:
+          command: |
+            whoami
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          user: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          script: |
-            echo ${{ secrets.USERNAME }}
 
   # With no caching at all the entire ci process takes 4m 30s to complete!
   # pytest:
