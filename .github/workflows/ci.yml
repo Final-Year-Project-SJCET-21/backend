@@ -36,12 +36,15 @@ jobs:
 
   deployment:
     runs-on: ubuntu-latest
-    uses: appleboy/ssh-action@master
-    with:
-      host: ${{ secrets.HOST }}
-      username: ${{ secrets.USERNAME }}
-      key: ${{ secrets.KEY }}
-      script: whoami
+    steps:
+
+      - name: "Deploying to Server"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: whoami
 
   # With no caching at all the entire ci process takes 4m 30s to complete!
   # pytest:
