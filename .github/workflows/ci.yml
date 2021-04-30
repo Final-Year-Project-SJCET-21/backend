@@ -44,7 +44,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          script: whoami
+          script: |
+            echo ${{ secrets.USERNAME }}
 
   # With no caching at all the entire ci process takes 4m 30s to complete!
   # pytest:
