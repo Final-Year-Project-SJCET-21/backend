@@ -42,7 +42,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            whoami
+            ls -a
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USERNAME }}
           pass: ${{ secrets.KEY }}
