@@ -15,3 +15,9 @@ class ClassRoom(models.Model):
 
     def __str__(self):
         return self.room_name
+
+
+class EnrolledClass(models.Model):
+    room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    enrollement_date = models.DateTimeField(auto_now_add=True, editable=False)
