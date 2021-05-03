@@ -13,10 +13,17 @@ class ClassroomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ClassRoom
-        read_only_fields = ("created_by", "created_on")
+        read_only_fields = ("id", "created_by", "created_on")
         fields = [
             "id",
             "room_name",
             "created_by",
             "created_on",
         ]
+
+
+class EnrolledClassSerializer(serializers.Serializer):
+    message = serializers.CharField(max_length=200, read_only=True)
+
+    class Meta:
+        fields = ["message"]

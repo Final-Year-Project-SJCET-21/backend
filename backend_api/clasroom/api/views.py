@@ -1,8 +1,8 @@
-from rest_framework import viewsets
+from rest_framework import generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from ..models import ClassRoom
-from .serializers import ClassroomSerializer
+from .serializers import ClassroomSerializer, EnrolledClassSerializer
 
 
 class ClassRoomViewSet(viewsets.ModelViewSet):
@@ -55,3 +55,7 @@ class ClassRoomViewSet(viewsets.ModelViewSet):
 
 
 #     return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+
+class EnrollViewSet(generics.CreateAPIView):
+    serializer_class = EnrolledClassSerializer
