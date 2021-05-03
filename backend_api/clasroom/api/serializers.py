@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import ClassRoom
+from ..models import ClassRoom,Modules
 
 
 class ClassroomSerializer(serializers.ModelSerializer):
@@ -20,3 +20,13 @@ class ClassroomSerializer(serializers.ModelSerializer):
             "created_by",
             "created_on",
         ]
+class ModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Modules
+        read_only_fields = ( "created_on") 
+        fields = [
+            "module_name",
+            "room",
+            "created_on",
+        ]
+            
