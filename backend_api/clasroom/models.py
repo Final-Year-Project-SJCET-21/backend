@@ -15,3 +15,10 @@ class ClassRoom(models.Model):
 
     def __str__(self):
         return self.room_name
+
+class Modules(models.Model):
+    module_name = models.CharField(max_length=200)
+    room = models.ForeignKey(
+        ClassRoom,on_delete=models.CASCADE
+    )
+    created_on = models.DateTimeField(auto_now_add=True)
