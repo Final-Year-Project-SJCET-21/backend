@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import ClassRoom
+from ..models import ClassRoom, Modules
 
 
 class ClassroomSerializer(serializers.ModelSerializer):
@@ -27,3 +27,14 @@ class EnrolledClassSerializer(serializers.Serializer):
 
     class Meta:
         fields = ["message"]
+
+
+class ModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Modules
+        read_only_fields = "created_on"
+        fields = [
+            "module_name",
+            "room",
+            "created_on",
+        ]

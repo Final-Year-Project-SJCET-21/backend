@@ -21,3 +21,9 @@ class EnrolledClass(models.Model):
     room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     enrollement_date = models.DateTimeField(auto_now_add=True, editable=False)
+
+
+class Modules(models.Model):
+    module_name = models.CharField(max_length=200)
+    room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
