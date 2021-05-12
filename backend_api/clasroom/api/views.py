@@ -1,7 +1,11 @@
-from rest_framework import generics, viewsets
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.shortcuts import get_object_or_404
+from rest_framework import status, viewsets
 
-from ..models import ClassRoom, Modules
+# from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+
+from ..models import ClassRoom, EnrolledClass, Modules
 from .serializers import ClassroomSerializer, EnrolledClassSerializer, ModuleSerializer
 
 
@@ -57,8 +61,40 @@ class ClassRoomViewSet(viewsets.ModelViewSet):
 #     return Response({}, status=status.HTTP_204_NO_CONTENT)
 
 
-class EnrollViewSet(generics.CreateAPIView):
+class EnrollViewSet(viewsets.ModelViewSet):
     serializer_class = EnrolledClassSerializer
+
+    def get_queryset(self):
+        clasroom = self.kwargs.get("clasroom_pk", None)
+        queryset = EnrolledClass.objects.filter(room=clasroom)
+        return queryset
+
+    def get_serializer_class(self):
+        if hasattr(self, "action") and (
+            self.action == "list" or self.action == "retrieve"
+        ):
+            return EnrolledClassSerializer
+        return super().get_serializer_class()
+
+    def perform_create(self, serializer):
+        room = get_object_or_404(ClassRoom, pk=self.kwargs.get("clasroom_pk"))
+        if room:
+            serializer.save(room=room)
+            return Response(
+                {"message": "This Clasroom doesnt exist"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        return Response({}, status=status.HTTP_201_CREATED)
+
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == "list" or self.action == "retrieve":
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
 
 class ModuleViewSet(viewsets.ModelViewSet):
@@ -88,3 +124,8 @@ class ModuleViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         request = serializer.context["request"]
         serializer.save(created_by=request.user)
+
+
+class StudentViewset(viewsets.ModelViewSet):
+    queryset = EnrolledClass.objects.all()
+    serializer_class = EnrolledClassSerializer

@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
-from ..models import ClassRoom, Modules
+from backend_api.users.api.serializers import UserDetailSerializer
+
+from ..models import ClassRoom, EnrolledClass, Modules
 
 
 class ClassroomSerializer(serializers.ModelSerializer):
@@ -22,11 +24,21 @@ class ClassroomSerializer(serializers.ModelSerializer):
         ]
 
 
-class EnrolledClassSerializer(serializers.Serializer):
-    message = serializers.CharField(max_length=200, read_only=True)
-
+class EnrolledClassSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ["message"]
+        model = EnrolledClass
+        read_only_fields = ["room"]
+        fields = ["room", "student"]
+
+
+class EnrollViewSerializer(serializers.Serializer):
+    room = ClassroomSerializer(many=False)
+    students = UserDetailSerializer(source="student", many=True)
+
+    # class Meta:
+    #     model = EnrolledClass
+    #     fields = ["room"]
+    #
 
 
 class ModuleSerializer(serializers.ModelSerializer):
