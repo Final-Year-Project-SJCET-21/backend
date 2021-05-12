@@ -42,7 +42,15 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            supervisorctl restart project_api
+            supervisorctl stop project_api
+            cd/webapps/project
+            source ./.venv/bin/activate
+            pip install -r requirements/local.txt
+            python manage.py migrate
+            python manage.py collectstatic --noinput
+            deactivate
+            supervisorctl start project_api
+              
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USERNAME }}
           pass: ${{ secrets.KEY }}
