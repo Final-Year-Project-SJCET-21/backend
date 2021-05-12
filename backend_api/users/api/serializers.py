@@ -18,6 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "name", "email"]
+
+
 class MyRegisterSerializer(RegisterSerializer):
     username = None
     name = serializers.CharField(required=True, write_only=True)
