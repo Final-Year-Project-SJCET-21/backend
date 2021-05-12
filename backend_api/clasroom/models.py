@@ -18,8 +18,8 @@ class ClassRoom(models.Model):
 
 
 class EnrolledClass(models.Model):
-    room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(ClassRoom, related_name="room", on_delete=models.CASCADE)
+    student = models.ForeignKey(User, related_name="students", on_delete=models.CASCADE)
     enrollement_date = models.DateTimeField(auto_now_add=True, editable=False)
 
 
