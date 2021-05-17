@@ -1,9 +1,12 @@
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from django.contrib.auth import get_user_model
+
+# from django.db.models import fields
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_auth.serializers import LoginSerializer as RestAuthLoginSerializer
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 
 User = get_user_model()
 
@@ -11,17 +14,17 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["email", "name", "url"]
+        fields = ["id", "name", "email", "role"]
 
-        extra_kwargs = {
-            "url": {"view_name": "api:user-detail", "lookup_field": "email"}
-        }
+        # extra_kwargs = {
+        #     "url": {"view_name": "api:user-detail", "lookup_field": "email"}
+        # }
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "name", "email"]
+        fields = ["id", "name", "email", "role"]
 
 
 class MyRegisterSerializer(RegisterSerializer):
@@ -71,3 +74,11 @@ class TeacherRegisterSerializer(RegisterSerializer):
 
 class LoginSerializer(RestAuthLoginSerializer):
     username = None
+
+
+class TokenSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Token
+        fields = ("key", "user")
