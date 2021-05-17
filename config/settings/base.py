@@ -281,7 +281,8 @@ ACCOUNT_ADAPTER = "backend_api.users.adapters.AccountAdapter"
 SOCIALACCOUNT_ADAPTER = "backend_api.users.adapters.SocialAccountAdapter"
 
 REST_AUTH_SERIALIZERS = {
-    "LOGIN_SERIALIZER": "backend_api.users.api.serializers.LoginSerializer"
+    "LOGIN_SERIALIZER": "backend_api.users.api.serializers.LoginSerializer",
+    "TOKEN_SERIALIZER": "backend_api.users.api.serializers.TokenSerializer",
 }
 REST_AUTH_REGISTER_SERIALIZERS = {
     "REGISTER_SERIALIZER": "backend_api.users.api.serializers.MyRegisterSerializer",
@@ -309,3 +310,6 @@ CORS_ORIGIN_WHITELIST = (
     "http://127.0.0.1:8000",
     "http://127.0.0.1:3000",
 )
+# SWAGGER_SETTINGS = {
+#    'USE_SESSION_AUTH': False
+# }
