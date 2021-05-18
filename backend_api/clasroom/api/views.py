@@ -6,11 +6,10 @@ from rest_framework import mixins, status, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from ..models import ClassRoom, EnrolledClass, ModuleFiles, Modules
-from .serializers import (
+from ..models import ClassRoom, EnrolledClass, Modules
+from .serializers import (  # ModuleFileSerializer,
     ClassroomSerializer,
     EnrolledClassSerializer,
-    ModuleFileSerializer,
     ModuleSerializer,
 )
 
@@ -137,9 +136,9 @@ class StudentViewset(viewsets.ModelViewSet):
     serializer_class = EnrolledClassSerializer
 
 
-class ModuleFileVieset(viewsets.ModelViewSet):
-    queryset = ModuleFiles.objects.all()
-    serializer_class = ModuleFileSerializer
+# class ModuleFileVieset(viewsets.ModelViewSet):
+#     queryset = ModuleFiles.objects.all()
+#     serializer_class = ModuleFileSerializer
 
 
 class MyCourseViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
