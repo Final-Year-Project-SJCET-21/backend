@@ -6,6 +6,8 @@ from rest_framework_nested import routers
 from backend_api.clasroom.api.views import (
     ClassRoomViewSet,
     EnrollViewSet,
+    ModuleFileVieset,
+    MyCourseViewset,
     StudentViewset,
 )
 
@@ -19,6 +21,8 @@ else:
 # router.register("users", UserViewSet)
 router.register("clasroom", ClassRoomViewSet)
 router.register("students", StudentViewset)
+router.register("notes", ModuleFileVieset)
+router.register("my-courses", MyCourseViewset, basename="mycourses")
 students_router = routers.NestedSimpleRouter(router, "clasroom", lookup="clasroom")
 students_router.register(
     "enrolled-students", EnrollViewSet, basename="clasroom-students"
