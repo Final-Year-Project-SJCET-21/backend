@@ -34,26 +34,26 @@ jobs:
       - name: Install and Run Pre-commit 
         uses: pre-commit/action@v2.0.0
 
-  deployment:
-    runs-on: ubuntu-latest
-    steps:
+  # deployment:
+  #   runs-on: ubuntu-latest
+  #   steps:
 
-      - name: "Deploying to Server"
-        uses: fifsky/ssh-action@master
-        with:
-          command: |
-            supervisorctl stop project_api
-            cd/webapps/project
-            source ./.venv/bin/activate
-            pip install -r requirements/local.txt
-            python manage.py migrate
-            python manage.py collectstatic --noinput
-            deactivate
-            supervisorctl start project_api
+  #     - name: "Deploying to Server"
+  #       uses: fifsky/ssh-action@master
+  #       with:
+  #         command: |
+  #           supervisorctl stop project_api
+  #           cd/webapps/project
+  #           source ./.venv/bin/activate
+  #           pip install -r requirements/local.txt
+  #           python manage.py migrate
+  #           python manage.py collectstatic --noinput
+  #           deactivate
+  #           supervisorctl start project_api
               
-          host: ${{ secrets.HOST }}
-          user: ${{ secrets.USERNAME }}
-          pass: ${{ secrets.KEY }}
+  #         host: ${{ secrets.HOST }}
+  #         user: ${{ secrets.USERNAME }}
+  #         pass: ${{ secrets.KEY }}
 
   # With no caching at all the entire ci process takes 4m 30s to complete!
   # pytest:
