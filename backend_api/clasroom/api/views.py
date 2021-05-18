@@ -1,12 +1,18 @@
+# from django.db.models.query_utils import select_related_descend
 from django.shortcuts import get_object_or_404
-from rest_framework import status, viewsets
+from rest_framework import mixins, status, viewsets
 
 # from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from ..models import ClassRoom, EnrolledClass, Modules
-from .serializers import ClassroomSerializer, EnrolledClassSerializer, ModuleSerializer
+from ..models import ClassRoom, EnrolledClass, ModuleFiles, Modules
+from .serializers import (
+    ClassroomSerializer,
+    EnrolledClassSerializer,
+    ModuleFileSerializer,
+    ModuleSerializer,
+)
 
 
 class ClassRoomViewSet(viewsets.ModelViewSet):
@@ -129,3 +135,20 @@ class ModuleViewSet(viewsets.ModelViewSet):
 class StudentViewset(viewsets.ModelViewSet):
     queryset = EnrolledClass.objects.all()
     serializer_class = EnrolledClassSerializer
+
+
+class ModuleFileVieset(viewsets.ModelViewSet):
+    queryset = ModuleFiles.objects.all()
+    serializer_class = ModuleFileSerializer
+
+
+class MyCourseViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = ClassroomSerializer
+
+    def get_queryset(self):
+        if self.request.user.role == "S":
+            rooms = EnrolledClass.objects.filter(student=self.request.user).values(
+                "room"
+            )
+            return ClassRoom.objects.filter(id__in=rooms)
+        return ClassRoom.objects.filter(created_by=self.request.user)
