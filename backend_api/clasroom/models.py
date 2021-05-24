@@ -27,3 +27,11 @@ class Modules(models.Model):
     module_name = models.CharField(max_length=200)
     room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
+
+
+class ModuleFiles(models.Model):
+    module = models.ForeignKey(Modules, on_delete=models.CASCADE)
+    filename = models.CharField(max_length=200, blank=False)
+    description = models.TextField(blank=False)
+    document = models.FileField(upload_to="module-notes/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
