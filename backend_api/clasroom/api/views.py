@@ -141,6 +141,21 @@ class ModuleFileVieset(viewsets.ModelViewSet):
     queryset = ModuleFiles.objects.all()
     serializer_class = ModuleFileSerializer
 
+    def get_queryset(self):
+        module = get_object_or_404(Modules, pk=self.kwargs.get("module_pk"))
+        queryset = ModuleFiles.objects.filter(module=module)
+        return queryset
+
+    def perform_create(self, serializer):
+        module = get_object_or_404(Modules, pk=self.kwargs.get("module_pk"))
+        if module:
+            serializer.save(module=module)
+            return Response(
+                {"message": "This module doesnt exist"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        return Response({}, status=status.HTTP_201_CREATED)
+
 
 class MyCourseViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = ClassroomSerializer
