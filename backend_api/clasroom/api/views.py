@@ -108,13 +108,14 @@ class ModuleViewSet(viewsets.ModelViewSet):
     Rooms View
     """
 
-    queryset = Modules.objects.all().order_by("-created_on")
+    # queryset = Modules.objects.all().order_by("-created_on")
     serializer_class = ModuleSerializer
 
     def get_queryset(self):
 
         # By default list of rooms return
-        queryset = Modules.objects.all().order_by("-created_on")
+        room = get_object_or_404(ClassRoom, pk=self.kwargs.get("clasroom_pk"))
+        queryset = Modules.objects.filter(room=room).order_by("-created_on")
         return queryset
 
     def get_permissions(self):
@@ -128,8 +129,8 @@ class ModuleViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
-        request = serializer.context["request"]
-        serializer.save(created_by=request.user)
+        room = get_object_or_404(ClassRoom, pk=self.kwargs.get("clasroom_pk"))
+        serializer.save(room=room)
 
 
 class StudentViewset(viewsets.ModelViewSet):
