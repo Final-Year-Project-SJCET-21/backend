@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from backend_api.users.api.serializers import UserDetailSerializer
 
-from ..models import ClassRoom, EnrolledClass, Modules
+from ..models import ClassRoom, EnrolledClass, ModuleFiles, Modules
 
 
 class ClassroomSerializer(serializers.ModelSerializer):
@@ -44,9 +44,15 @@ class EnrollViewSerializer(serializers.Serializer):
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Modules
-        read_only_fields = "created_on"
+        read_only_fields = ["created_on"]
         fields = [
             "module_name",
             "room",
             "created_on",
         ]
+
+
+class ModuleFileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ModuleFiles
+        fields = ["module", "filename", "document", "description"]
