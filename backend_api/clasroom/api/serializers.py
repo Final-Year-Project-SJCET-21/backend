@@ -44,8 +44,9 @@ class EnrollViewSerializer(serializers.Serializer):
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Modules
-        read_only_fields = ["room", "created_on"]
+        read_only_fields = ["id", "room", "created_on"]
         fields = [
+            "id",
             "module_name",
             "room",
             "created_on",
