@@ -51,8 +51,8 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "config.urls"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
-WSGI_APPLICATION = "config.wsgi.application"
-# ASGI_APPLICATION = "config.asgi.application"
+# WSGI_APPLICATION = "config.wsgi.application"
+ASGI_APPLICATION = "config.asgi.application"
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -293,7 +293,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        # "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
@@ -307,6 +307,7 @@ CORS_ORIGIN_ALLW_ALL = True
 
 CORS_ORIGIN_WHITELIST = (
     "http://localhost:3000",
+    "https://proteaux.xyz",
     "http://127.0.0.1:8000",
     "http://127.0.0.1:3000",
 )
