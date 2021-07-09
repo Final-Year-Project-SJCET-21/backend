@@ -10,6 +10,7 @@ from ..models import ClassRoom, EnrolledClass, ModuleFiles, Modules
 from .serializers import (
     ClassroomSerializer,
     EnrolledClassSerializer,
+    EnrollViewSerializer,
     ModuleFileSerializer,
     ModuleSerializer,
 )
@@ -84,8 +85,9 @@ class EnrollViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         room = get_object_or_404(ClassRoom, pk=self.kwargs.get("clasroom_pk"))
+        student = self.request.user
         if room:
-            serializer.save(room=room)
+            serializer.save(room=room, student=student)
             return Response(
                 {"message": "This Clasroom doesnt exist"},
                 status=status.HTTP_404_NOT_FOUND,
@@ -135,7 +137,7 @@ class ModuleViewSet(viewsets.ModelViewSet):
 
 class StudentViewset(viewsets.ModelViewSet):
     queryset = EnrolledClass.objects.all()
-    serializer_class = EnrolledClassSerializer
+    serializer_class = EnrollViewSerializer
 
 
 class ModuleFileVieset(viewsets.ModelViewSet):

@@ -25,10 +25,12 @@ class ClassroomSerializer(serializers.ModelSerializer):
 
 
 class EnrolledClassSerializer(serializers.ModelSerializer):
+    student_name = serializers.CharField(source="student.name", read_only=True)
+
     class Meta:
         model = EnrolledClass
-        read_only_fields = ["room"]
-        fields = ["room", "student"]
+        read_only_fields = ["room", "student_name"]
+        fields = ["room", "student_name"]
 
 
 class EnrollViewSerializer(serializers.Serializer):
