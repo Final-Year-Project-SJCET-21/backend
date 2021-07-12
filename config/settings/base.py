@@ -310,6 +310,7 @@ CORS_ORIGIN_WHITELIST = (
     "https://proteaux.xyz",
     "http://127.0.0.1:8000",
     "http://127.0.0.1:3000",
+    "https://brave-saha-ada0a6.netlify.app",
 )
 # SWAGGER_SETTINGS = {
 #    'USE_SESSION_AUTH': False
